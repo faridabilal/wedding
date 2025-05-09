@@ -1,11 +1,3 @@
-<!-- Music player with file upload option -->
-<audio id="bgMusic" loop preload="auto">
-    <!-- Default source replaced by user-uploaded file -->
-    <source src="/home/renxiety/Documents/Wedding/music/Thank God I Found You - Cover by BuDaKhelxKat (Mariah Carey, Joe, 98 Degrees).mp3" type="audio/mpeg" id="audioSource">
-    Your browser does not support the audio element.
-</audio>
-
-<!--    <!-- We've removed the RSVP Modal completely as it's no longer needed -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,9 +37,11 @@
         font-family: 'Cormorant Garamond', serif;
     }
     
+    /* Updated cover section with direct image path */
     .cover-section {
         height: 100vh;
-        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/api/placeholder/1200/800');
+        /* Replace this URL with your cover image path */
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/home/renxiety/Documents/Wedding/images/SAN02622.jpg');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -76,9 +70,11 @@
         border-bottom: 1px solid var(--accent-color);
     }
     
+    /* Updated names banner with direct image path */
     .names-banner {
         padding: 3rem 1rem;
-        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/api/placeholder/800/400');
+        /* Replace this URL with your banner image path */
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/home/renxiety/Documents/Wedding/images/banner.jpeg');
         background-size: cover;
         background-position: center;
         color: white;
@@ -417,6 +413,17 @@
         color: var(--secondary-color);
         font-weight: 500;
     }
+    
+    .custom-background {
+        background-size: cover !important;
+        background-position: center !important;
+    }
+    
+    /* File upload button for custom background - REMOVED */
+    /* Add a text shadow to improve readability on image backgrounds */
+    .text-with-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    }
 </style>
 </head>
 <body>
@@ -434,12 +441,12 @@
     </button>
 </div>
 
-<!-- Cover Section -->
-<section class="cover-section text-center">
+<!-- Cover Section with Background Image -->
+<section class="cover-section text-center" id="coverSection">
     <div class="container">
-        <h3 class="elegant-font animate__animated animate__fadeIn mb-3">You're Invited to the Wedding of</h3>
-        <h1 class="script-font couple-names animate__animated animate__fadeIn animate__delay-1s">Farida <span class="floating">&</span> Bilal</h1>
-        <p class="elegant-font animate__animated animate__fadeIn animate__delay-2s mt-4">
+        <h3 class="elegant-font animate__animated animate__fadeIn mb-3 text-with-shadow">You're Invited to the Wedding of</h3>
+        <h1 class="script-font couple-names animate__animated animate__fadeIn animate__delay-1s text-with-shadow">Farida <span class="floating">&</span> Bilal</h1>
+        <p class="elegant-font animate__animated animate__fadeIn animate__delay-2s mt-4 text-with-shadow">
             <span id="wedding-date">JUNE 7TH, 2025</span>
         </p>
         <div class="mt-5 animate__animated animate__fadeIn animate__delay-3s">
@@ -454,10 +461,10 @@
 <section id="invitation" class="py-5">
     <div class="container">
         <div class="floating-card mx-auto animate__animated animate__fadeInUp">
-            <!-- Names Banner -->
-            <div class="names-banner text-center">
-                <h2 class="script-font couple-names mb-1">Farida & Bilal</h2>
-                <p class="elegant-font">ARE GETTING MARRIED</p>
+            <!-- Names Banner with Background Image -->
+            <div class="names-banner text-center" id="namesBanner">
+                <h2 class="script-font couple-names mb-1 text-with-shadow">Farida & Bilal</h2>
+                <p class="elegant-font text-with-shadow">ARE GETTING MARRIED</p>
             </div>
 
             <!-- Greeting Section -->
@@ -595,13 +602,13 @@
                 <h3 class="elegant-font mb-4">Our Journey</h3>
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="/home/renxiety/Documents/Wedding/images/SAN02898.jpg" alt="Couple Photo 1" class="gallery-img">
+                        <img src="/api/placeholder/400/400" alt="Couple Photo 1" class="gallery-img" id="galleryImg1">
                     </div>
                     <div class="col-md-4">
-                        <img src="/home/renxiety/Documents/Wedding/images/SAN02871.jpg" alt="Couple Photo 2" class="gallery-img">
+                        <img src="/api/placeholder/400/400" alt="Couple Photo 2" class="gallery-img" id="galleryImg2">
                     </div>
                     <div class="col-md-4">
-                        <img src="/home/renxiety/Documents/Wedding/images/SAN02747.jpg" alt="Couple Photo 3" class="gallery-img">
+                        <img src="/api/placeholder/400/400" alt="Couple Photo 3" class="gallery-img" id="galleryImg3">
                     </div>
                 </div>
             </div>
@@ -678,12 +685,11 @@
                 <p class="mb-4">Your presence is our present. However, if you wish to bless us with a gift, we've provided our payment details below:</p>
                 
                 <div class="row justify-content-center">
-                    
                     <div class="col-md-5 mb-4">
                         <div class="card h-70 p-4 border-0 shadow-sm">
                             <h4 class="mb-3">Bank Transfer</h4>
                             <div class="bank-details mx-auto mb-3 p-3 bg-light rounded">
-                                <img src="/home/renxiety/Documents/Wedding/images/bni.png" alt="BNI Logo" class="mb-2" style="max-height: 30px;">
+                                <img src="/api/placeholder/100/30" alt="BNI Logo" class="mb-2" style="max-height: 30px;" id="bniLogo">
                                 <p class="mb-1">Account Number: 1262972107</p>
                                 <p class="mb-0">Account Name: Faridatul Rizqi Zakiyah</p>
                             </div>
@@ -694,7 +700,7 @@
                         <div class="card h-70 p-4 border-0 shadow-sm">
                             <h4 class="mb-3">Bank Transfer</h4>
                             <div class="bank-details mx-auto mb-3 p-3 bg-light rounded">
-                                <img src="/home/renxiety/Documents/Wedding/images/bca.png" alt="BCA Logo" class="mb-2" style="max-height: 30px;">
+                                <img src="/api/placeholder/100/30" alt="BCA Logo" class="mb-2" style="max-height: 30px;" id="bcaLogo">
                                 <p class="mb-1">Account Number: 2890790952</p>
                                 <p class="mb-0">Account Name: Faridatul Rizqi Zakiyah</p>
                             </div>
@@ -712,65 +718,7 @@
     </div>
 </section>
 
-<!-- RSVP Modal -->
-<div class="modal fade" id="rsvpModal" tabindex="-1" aria-labelledby="rsvpModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="rsvpModalLabel">RSVP for Our Wedding</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="rsvpForm">
-                    <div class="mb-3">
-                        <label for="guestName" class="form-label">Your Name</label>
-                        <input type="text" class="form-control" id="guestName" placeholder="Enter your full name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="guestEmail" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="guestEmail" placeholder="Enter your email">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Will you be attending?</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="attendance" id="attending" value="yes" checked>
-                            <label class="form-check-label" for="attending">
-                                Happily Accept
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="attendance" id="notAttending" value="no">
-                            <label class="form-check-label" for="notAttending">
-                                Regretfully Decline
-                            </label>
-                        </div>
-                    </div>
-                    <div class="mb-3" id="guestsDiv">
-                        <label for="guestCount" class="form-label">Number of Guests (Including yourself)</label>
-                        <select class="form-control" id="guestCount">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="dietaryRestrictions" class="form-label">Any Dietary Restrictions?</label>
-                        <textarea class="form-control" id="dietaryRestrictions" rows="2" placeholder="Please specify any dietary restrictions"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Message for the Couple (Optional)</label>
-                        <textarea class="form-control" id="message" rows="3" placeholder="Your message or well wishes"></textarea>
-                    </div>
-                    <button type="submit" class="rsvp-button w-100">Submit RSVP</button>
-                </form>
-                <div id="thankYouMessage" style="display: none;" class="text-center mt-3">
-                    <i class="fas fa-check-circle" style="font-size: 3rem; color: green;"></i>
-                    <h4 class="mt-3">Thank You!</h4>
-                    <p>Your RSVP has been received. We look forward to celebrating with you!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Background image upload controls - REMOVED -->
 
 <!-- Bootstrap & jQuery Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -802,13 +750,47 @@
         
         // Set up background music - Initially paused
         const bgMusic = document.getElementById('bgMusic');
+        let audioPlaying = false;
         
         // Auto play music when user interacts with page (to satisfy browser autoplay policies)
         $(document).one('click', function() {
-            bgMusic.play();
-            $('#toggleMusic').html('<i class="fas fa-volume-up"></i>');
-            audioPlaying = true;
+            try {
+                bgMusic.play()
+                .then(() => {
+                    $('#toggleMusic').html('<i class="fas fa-volume-up"></i>');
+                    audioPlaying = true;
+                })
+                .catch(error => {
+                    console.log("Audio autoplay prevented:", error);
+                });
+            } catch(e) {
+                console.error("Audio play error:", e);
+            }
         });
+        
+        // Toggle music button
+        $('#toggleMusic').on('click', function() {
+            try {
+                if (audioPlaying) {
+                    bgMusic.pause();
+                    $(this).html('<i class="fas fa-volume-mute"></i>');
+                    audioPlaying = false;
+                } else {
+                    bgMusic.play()
+                    .then(() => {
+                        $(this).html('<i class="fas fa-volume-up"></i>');
+                        audioPlaying = true;
+                    })
+                    .catch(error => {
+                        console.log("Audio play prevented:", error);
+                    });
+                }
+            } catch(e) {
+                console.error("Toggle audio error:", e);
+            }
+        });
+        
+        // Removed background image upload functionality
         
         // Countdown timer
         function updateCountdown() {
@@ -844,17 +826,19 @@
             const heartsContainer = document.getElementById('hearts');
             
             // Remove all existing hearts
-            while (heartsContainer.firstChild) {
+            while (heartsContainer && heartsContainer.firstChild) {
                 heartsContainer.removeChild(heartsContainer.firstChild);
             }
             
             // Create new hearts
-            for (let i = 0; i < 10; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.style.left = Math.random() * 100 + '%';
-                heart.style.animationDelay = Math.random() * 3 + 's';
-                heartsContainer.appendChild(heart);
+            if (heartsContainer) {
+                for (let i = 0; i < 10; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 3 + 's';
+                    heartsContainer.appendChild(heart);
+                }
             }
         }
         
@@ -915,28 +899,6 @@
                     $(this).remove();
                 });
             }, 3000);
-            
-            // In a real application, you would send this data to your server
-            /* 
-            const formData = {
-                name: name,
-                comment: comment,
-                date: new Date()
-            };
-            
-            // Send data to server using AJAX
-            $.ajax({
-                url: 'your-server-endpoint',
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    // Handle success
-                },
-                error: function(error) {
-                    // Handle error
-                }
-            });
-            */
         });
         
         // Smooth scrolling for anchor links
@@ -984,32 +946,6 @@
         $(window).on('scroll', animateOnScroll);
         animateOnScroll();
         
-        // Save to Calendar functionality
-        $('.save-date').on('click', function(e) {
-            e.preventDefault();
-            
-            // Google Calendar URL (in a real app, you'd generate this properly)
-            const googleCalendarUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Sarah+and+Michael+Wedding&dates=20251017T160000Z/20251017T220000Z&details=We+are+getting+married!+Join+us+for+our+special+day.&location=Rosewood+Gardens,+123+Blossom+Avenue,+Willowbrook,+CA+94321';
-            
-            window.open(googleCalendarUrl, '_blank');
-        });
-        
-        // Toggle music
-        let audioPlaying = false;
-        $('#toggleMusic').on('click', function() {
-            const audio = document.getElementById('bgMusic');
-            
-            if (audioPlaying) {
-                audio.pause();
-                $(this).html('<i class="fas fa-volume-mute"></i>');
-            } else {
-                audio.play();
-                $(this).html('<i class="fas fa-volume-up"></i>');
-            }
-            
-            audioPlaying = !audioPlaying;
-        });
-        
         // Function to open Google Maps directions
         window.showDirections = function() {
             // Replace with actual venue coordinates
@@ -1018,55 +954,16 @@
             window.open(mapsUrl, '_blank');
         };
         
-        // Generate calendar download links
-        function generateCalendarLinks() {
-            // Wedding details
-            const title = "Sarah and Michael's Wedding";
-            const description = "Join us for our wedding ceremony and reception.";
-            const location = "Rosewood Gardens, 123 Blossom Avenue, Willowbrook, CA 94321";
-            const startDate = "2025-10-17T16:00:00";
-            const endDate = "2025-10-17T23:00:00";
+        // Try to load gallery images
+        function loadGalleryImages() {
+            // These would normally be URLs to your hosted images
+            // If you're storing them locally, you can use FileReader to display them
             
-            // Google Calendar
-            const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate.replace(/[-:]/g, '')}/${endDate.replace(/[-:]/g, '')}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
-            
-            // Attach to buttons
-            $('.google-cal-link').attr('href', googleCalUrl);
+            // You can also add code here to load the bank logo images
+            // $('#bniLogo').attr('src', 'path-to-bni-logo.png');
+            // $('#bcaLogo').attr('src', 'path-to-bca-logo.png');
         }
         
-        // Call calendar link generator
-        generateCalendarLinks();
-        
-        // Add copy to clipboard functionality for bank account
-        $('.copy-account').on('click', function() {
-            const accountNumber = $(this).data('account');
-            
-            // Create temporary element
-            const el = document.createElement('textarea');
-            el.value = accountNumber;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            
-            // Show copied message
-            $(this).tooltip('hide')
-                .attr('data-bs-original-title', 'Copied!')
-                .tooltip('show');
-            
-            // Reset tooltip after 2 seconds
-            setTimeout(() => {
-                $(this).tooltip('hide')
-                    .attr('data-bs-original-title', 'Copy Account Number');
-            }, 2000);
-        });
-        
-        // Initialize tooltips
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        tooltipTriggerList.map(function(tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
+        // Call function to load gallery images
+        loadGalleryImages();
     });
-</script>
-</body>
-</html>
