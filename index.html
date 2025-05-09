@@ -1,0 +1,1072 @@
+<!-- Music player with file upload option -->
+<audio id="bgMusic" loop preload="auto">
+    <!-- Default source replaced by user-uploaded file -->
+    <source src="/home/renxiety/Documents/Wedding/music/Thank God I Found You - Cover by BuDaKhelxKat (Mariah Carey, Joe, 98 Degrees).mp3" type="audio/mpeg" id="audioSource">
+    Your browser does not support the audio element.
+</audio>
+
+<!--    <!-- We've removed the RSVP Modal completely as it's no longer needed -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Invitation</title>
+<!-- Bootstrap CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Tangerine:wght@700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<!-- Animation Library -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+<style>
+    :root {
+        --primary-color: #d4b08c;
+        --secondary-color: #8d6e63;
+        --accent-color: #efd9c0;
+        --text-color: #5a5a5a;
+        --light-bg: #f9f7f4;
+    }
+    
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: var(--light-bg);
+        color: var(--text-color);
+        overflow-x: hidden;
+    }
+    
+    .script-font {
+        font-family: 'Tangerine', cursive;
+    }
+    
+    .elegant-font {
+        font-family: 'Cormorant Garamond', serif;
+    }
+    
+    .cover-section {
+        height: 100vh;
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/api/placeholder/1200/800');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+    }
+    
+    .floating-card {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        transition: all 0.5s ease;
+        max-width: 90%;
+    }
+    
+    .card-section {
+        padding: 2.5rem;
+        position: relative;
+    }
+    
+    .card-section:not(:last-child) {
+        border-bottom: 1px solid var(--accent-color);
+    }
+    
+    .names-banner {
+        padding: 3rem 1rem;
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/api/placeholder/800/400');
+        background-size: cover;
+        background-position: center;
+        color: white;
+    }
+    
+    .couple-names {
+        font-size: 5rem;
+        line-height: 1.2;
+    }
+    
+    .details-icon {
+        background-color: var(--primary-color);
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .countdown-container {
+        background-color: var(--accent-color);
+        padding: 2rem;
+        border-radius: 8px;
+    }
+    
+    .countdown-box {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1rem 0.5rem;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+    
+    .countdown-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--secondary-color);
+    }
+    
+    .rsvp-button {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 12px 35px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        display: inline-block;
+        border: none;
+    }
+    
+    .rsvp-button:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        color: white;
+    }
+    
+    .gallery-img {
+        border-radius: 8px;
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+    }
+    
+    .gallery-img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+    
+    .music-control {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 1000;
+        opacity: 0.8;
+        transition: all 0.3s ease;
+    }
+    
+    .music-control:hover {
+        opacity: 1;
+    }
+    
+    .music-control button {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Floating elements */
+    .floating {
+        animation: floating 3s ease infinite;
+    }
+    
+    @keyframes floating {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    /* Heart animation */
+    .heart-animation {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        pointer-events: none;
+        z-index: 0;
+    }
+    
+    .heart {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        opacity: 0;
+        background-color: var(--primary-color);
+        transform: rotate(45deg);
+        animation: hearts 3s ease-in infinite;
+    }
+    
+    .heart:before,
+    .heart:after {
+        content: "";
+        width: 15px;
+        height: 15px;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        position: absolute;
+    }
+    
+    .heart:before {
+        top: -7.5px;
+        left: 0;
+    }
+    
+    .heart:after {
+        top: 0;
+        left: -7.5px;
+    }
+    
+    @keyframes hearts {
+        0% {
+            transform: rotate(45deg) translateY(0px);
+            opacity: 0;
+        }
+        20% {
+            opacity: 0.8;
+        }
+        100% {
+            transform: rotate(45deg) translateY(-100px);
+            opacity: 0;
+        }
+    }
+    
+    /* Map style */
+    .map-container {
+        height: 300px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Timeline */
+    .timeline {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .timeline::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        background-color: var(--accent-color);
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -3px;
+    }
+    
+    .timeline-container {
+        padding: 10px 40px;
+        position: relative;
+        background-color: inherit;
+        width: 50%;
+    }
+    
+    .timeline-container::after {
+        content: '';
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        right: -13px;
+        background-color: var(--light-bg);
+        border: 4px solid var(--primary-color);
+        top: 15px;
+        border-radius: 50%;
+        z-index: 1;
+    }
+    
+    .left {
+        left: 0;
+    }
+    
+    .right {
+        left: 50%;
+    }
+    
+    .left::before {
+        content: " ";
+        height: 0;
+        position: absolute;
+        top: 22px;
+        width: 0;
+        z-index: 1;
+        right: 30px;
+        border: medium solid var(--accent-color);
+        border-width: 10px 0 10px 10px;
+        border-color: transparent transparent transparent var(--accent-color);
+    }
+    
+    .right::before {
+        content: " ";
+        height: 0;
+        position: absolute;
+        top: 22px;
+        width: 0;
+        z-index: 1;
+        left: 30px;
+        border: medium solid var(--accent-color);
+        border-width: 10px 10px 10px 0;
+        border-color: transparent var(--accent-color) transparent transparent;
+    }
+    
+    .right::after {
+        left: -12px;
+    }
+    
+    .timeline-content {
+        padding: 20px 30px;
+        background-color: white;
+        position: relative;
+        border-radius: 6px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .couple-names {
+            font-size: 3.5rem;
+        }
+        
+        .timeline::after {
+            left: 31px;
+        }
+        
+        .timeline-container {
+            width: 100%;
+            padding-left: 70px;
+            padding-right: 25px;
+        }
+        
+        .timeline-container::before {
+            left: 60px;
+            border: medium solid var(--accent-color);
+            border-width: 10px 10px 10px 0;
+            border-color: transparent var(--accent-color) transparent transparent;
+        }
+        
+        .left::after, .right::after {
+            left: 15px;
+        }
+        
+        .right {
+            left: 0%;
+        }
+        
+        .card-section {
+            padding: 1.5rem;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .couple-names {
+            font-size: 2.5rem;
+        }
+    }
+    
+    /* Modal styles */
+    .custom-modal-dialog {
+        max-width: 500px;
+    }
+    
+    .modal-content {
+        border-radius: 12px;
+        overflow: hidden;
+        border: none;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+    
+    .modal-header {
+        background-color: var(--primary-color);
+        color: white;
+        border-bottom: none;
+    }
+    
+    .modal-body {
+        padding: 2rem;
+    }
+    
+    /* RSVP form styles */
+    .form-control {
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(212, 176, 140, 0.25);
+    }
+    
+    .form-label {
+        color: var(--secondary-color);
+        font-weight: 500;
+    }
+</style>
+</head>
+<body>
+<!-- Super simple HTML5 audio element -->
+<audio id="bgMusic" loop>
+    <!-- Replace this with an actual hosted MP3 file URL -->
+    <source src="/home/renxiety/Documents/Wedding/music/Thank God I Found You - Cover by BuDaKhelxKat (Mariah Carey, Joe, 98 Degrees).mp3" type="audio/mpeg">
+    Your browser does not support HTML5 audio.
+</audio>
+
+<!-- Music control button (fixed position) -->
+<div class="music-control">
+    <button id="toggleMusic" class="btn btn-sm btn-light rounded-circle shadow">
+        <i class="fas fa-volume-mute"></i>
+    </button>
+</div>
+
+<!-- Cover Section -->
+<section class="cover-section text-center">
+    <div class="container">
+        <h3 class="elegant-font animate__animated animate__fadeIn mb-3">You're Invited to the Wedding of</h3>
+        <h1 class="script-font couple-names animate__animated animate__fadeIn animate__delay-1s">Farida <span class="floating">&</span> Bilal</h1>
+        <p class="elegant-font animate__animated animate__fadeIn animate__delay-2s mt-4">
+            <span id="wedding-date">JUNE 7TH, 2025</span>
+        </p>
+        <div class="mt-5 animate__animated animate__fadeIn animate__delay-3s">
+            <a href="#invitation" class="btn rsvp-button">
+                <span id="personalized-view-invitation">View Invitation</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Invitation Content -->
+<section id="invitation" class="py-5">
+    <div class="container">
+        <div class="floating-card mx-auto animate__animated animate__fadeInUp">
+            <!-- Names Banner -->
+            <div class="names-banner text-center">
+                <h2 class="script-font couple-names mb-1">Farida & Bilal</h2>
+                <p class="elegant-font">ARE GETTING MARRIED</p>
+            </div>
+
+            <!-- Greeting Section -->
+            <div class="card-section text-center">
+                <div class="details-icon mb-4">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3 class="elegant-font mb-4" id="personalized-greeting">Dear Friend,</h3>
+                <p class="mb-4">With great joy, we invite you to join us as we exchange vows and begin our marriage journey together.</p>
+                <div class="heart-animation" id="hearts"></div>
+            </div>
+
+            <!-- Event Details Section -->
+            <div class="card-section text-center">
+                <div class="details-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3 class="elegant-font mb-4">Save the Date</h3>
+                <p class="mb-2"><strong>Saturday, JUNE 7th, 2025</strong></p>
+                <p>at ten o'clock in the morning</p>
+                
+                <!-- Countdown -->
+                <div class="countdown-container mt-4">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="countdown-box">
+                                <div class="countdown-number" id="days">00</div>
+                                <div>Days</div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="countdown-box">
+                                <div class="countdown-number" id="hours">00</div>
+                                <div>Hours</div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="countdown-box">
+                                <div class="countdown-number" id="minutes">00</div>
+                                <div>Minutes</div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="countdown-box">
+                                <div class="countdown-number" id="seconds">00</div>
+                                <div>Seconds</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Section -->
+            <div class="card-section text-center">
+                <div class="details-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3 class="elegant-font mb-4">Ceremony & Reception</h3>
+                <p class="mb-2"><strong>Gedung Batik Ponorogo</strong></p>
+                <p class="mb-3">123 Blossom Avenue, Willowbrook, CA 94321</p>
+                
+                <!-- Interactive Map -->
+                <div class="map-container mt-4 mb-4">
+                    <!-- Replace coordinates below with actual venue coordinates -->
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.297596007089!2d111.44997147700836!3d-7.863893292158037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e799fc705b5607f%3A0x879ec383f2c54b7a!2sGedung%20Produksi%20Batik%20Tulis%20Ponorogo!5e0!3m2!1sen!2sid!4v1746801320003!5m2!1sen!2sid" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                
+                <!-- Location QR Codes -->
+                <div class="row justify-content-center mt-4">
+                    <div class="col-md-5 mb-4">
+                        <div class="card h-100 p-3 border-0 shadow-sm">
+                            <h5 class="mb-3">Google Maps</h5>
+                            <div class="qr-container mx-auto mb-2" style="width: 150px; height: 150px; background-color: white; padding: 5px;">
+                                <!-- Replace with actual Google Maps location -->
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://maps.google.com/?q=Gedung+Produksi+Batik+Tulis+Ponorogo&cid=9747654507086462842" alt="Google Maps QR" class="img-fluid">
+                            </div>
+                            <p class="mb-0 small">Scan to open in Google Maps</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-5 mb-4">
+                        <div class="card h-100 p-3 border-0 shadow-sm">
+                            <h5 class="mb-3">Directions</h5>
+                            <div class="direction-info text-start p-2">
+                                <p class="mb-1 small"><i class="fas fa-car me-2"></i> <strong>By Car:</strong> 20 min from downtown</p>
+                                <p class="mb-0 small"><i class="fas fa-parking me-2"></i> <strong>Parking:</strong> Free valet parking available</p>
+                            </div>
+                            <button class="btn btn-sm btn-outline-secondary mt-2" onclick="showDirections()">Get Directions</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Section -->
+            <div class="card-section">
+                <div class="details-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="elegant-font text-center mb-4">Wedding Day Schedule</h3>
+                
+                <div class="timeline">
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <h4>7:30 AM</h4>
+                            <p>Akad Nikah</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <h4>9:15 AM</h4>
+                            <p>Temu Manten</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <h4>10:00 AM</h4>
+                            <p>Resepsi Pernikahan</p>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+
+            <!-- Gallery Section -->
+            <div class="card-section text-center">
+                <div class="details-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <h3 class="elegant-font mb-4">Our Journey</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="/home/renxiety/Documents/Wedding/images/SAN02898.jpg" alt="Couple Photo 1" class="gallery-img">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="/home/renxiety/Documents/Wedding/images/SAN02871.jpg" alt="Couple Photo 2" class="gallery-img">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="/home/renxiety/Documents/Wedding/images/SAN02747.jpg" alt="Couple Photo 3" class="gallery-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="card-section text-center">
+                <div class="details-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3 class="elegant-font mb-4">Leave Your Wishes</h3>
+                <p class="mb-4">We would love to hear your wishes and thoughts for our special day!</p>
+                
+                <!-- Comment Form -->
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <form id="commentForm" class="text-start">
+                            <div class="mb-3">
+                                <label for="commenterName" class="form-label">Your Name</label>
+                                <input type="text" class="form-control" id="commenterName" placeholder="Enter your name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="commentText" class="form-label">Your Message</label>
+                                <textarea class="form-control" id="commentText" rows="4" placeholder="Share your wishes for the couple..." required></textarea>
+                            </div>
+                            <button type="submit" class="rsvp-button">Send Wishes</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Comments Display -->
+                <div class="mt-5">
+                    <h4 class="mb-4">Wishes from Friends & Family</h4>
+                    <div id="commentsContainer">
+                        <!-- Sample Comments - These would be dynamically loaded in a real app -->
+                        <div class="comment-card mb-3">
+                            <div class="comment-header d-flex align-items-center mb-2">
+                                <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                    <span>JD</span>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">John Davis</h5>
+                                    <small class="text-muted">2 days ago</small>
+                                </div>
+                            </div>
+                            <div class="comment-body p-3 bg-light rounded">
+                                <p class="mb-0">Congratulations to both of you! I'm so excited to be part of your special day. May your love grow stronger with each passing day!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="comment-card mb-3">
+                            <div class="comment-header d-flex align-items-center mb-2">
+                                <div class="avatar bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                    <span>AS</span>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">Amanda Smith</h5>
+                                    <small class="text-muted">5 days ago</small>
+                                </div>
+                            </div>
+                            <div class="comment-body p-3 bg-light rounded">
+                                <p class="mb-0">So happy for you both! Your love story has been an inspiration to all of us. Wishing you a beautiful wedding and an even more beautiful life together.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gift & Payment Section -->
+            <div class="card-section text-center">
+                <div class="details-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3 class="elegant-font mb-4">Wedding Gift</h3>
+                <p class="mb-4">Your presence is our present. However, if you wish to bless us with a gift, we've provided our payment details below:</p>
+                
+                <div class="row justify-content-center">
+                    
+                    <div class="col-md-5 mb-4">
+                        <div class="card h-70 p-4 border-0 shadow-sm">
+                            <h4 class="mb-3">Bank Transfer</h4>
+                            <div class="bank-details mx-auto mb-3 p-3 bg-light rounded">
+                                <img src="/home/renxiety/Documents/Wedding/images/bni.png" alt="BNI Logo" class="mb-2" style="max-height: 30px;">
+                                <p class="mb-1">Account Number: 1262972107</p>
+                                <p class="mb-0">Account Name: Faridatul Rizqi Zakiyah</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-5 mb-4">
+                        <div class="card h-70 p-4 border-0 shadow-sm">
+                            <h4 class="mb-3">Bank Transfer</h4>
+                            <div class="bank-details mx-auto mb-3 p-3 bg-light rounded">
+                                <img src="/home/renxiety/Documents/Wedding/images/bca.png" alt="BCA Logo" class="mb-2" style="max-height: 30px;">
+                                <p class="mb-1">Account Number: 2890790952</p>
+                                <p class="mb-0">Account Name: Faridatul Rizqi Zakiyah</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Section -->
+            <div class="card-section text-center bg-light">
+                <h3 class="script-font mb-4" style="font-size: 2.5rem;">We can't wait to celebrate with you!</h3>
+                <p class="mb-0">Love, Farida & Bilal</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RSVP Modal -->
+<div class="modal fade" id="rsvpModal" tabindex="-1" aria-labelledby="rsvpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rsvpModalLabel">RSVP for Our Wedding</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="rsvpForm">
+                    <div class="mb-3">
+                        <label for="guestName" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="guestName" placeholder="Enter your full name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="guestEmail" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="guestEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Will you be attending?</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="attendance" id="attending" value="yes" checked>
+                            <label class="form-check-label" for="attending">
+                                Happily Accept
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="attendance" id="notAttending" value="no">
+                            <label class="form-check-label" for="notAttending">
+                                Regretfully Decline
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3" id="guestsDiv">
+                        <label for="guestCount" class="form-label">Number of Guests (Including yourself)</label>
+                        <select class="form-control" id="guestCount">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dietaryRestrictions" class="form-label">Any Dietary Restrictions?</label>
+                        <textarea class="form-control" id="dietaryRestrictions" rows="2" placeholder="Please specify any dietary restrictions"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message for the Couple (Optional)</label>
+                        <textarea class="form-control" id="message" rows="3" placeholder="Your message or well wishes"></textarea>
+                    </div>
+                    <button type="submit" class="rsvp-button w-100">Submit RSVP</button>
+                </form>
+                <div id="thankYouMessage" style="display: none;" class="text-center mt-3">
+                    <i class="fas fa-check-circle" style="font-size: 3rem; color: green;"></i>
+                    <h4 class="mt-3">Thank You!</h4>
+                    <p>Your RSVP has been received. We look forward to celebrating with you!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap & jQuery Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Function to get URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+    
+    // When document is ready
+    $(document).ready(function() {
+        // Get the name parameter from URL
+        const guestName = getUrlParameter('name');
+        
+        // Update the greeting if a name is provided
+        if (guestName && guestName.trim() !== '') {
+            $('#personalized-greeting').html(`Dear ${guestName},`);
+            $('#personalized-view-invitation').html(`View Your Invitation`);
+            document.title = `Wedding Invitation for ${guestName}`;
+            
+            // Pre-fill the comment form
+            $('#commenterName').val(guestName);
+        }
+        
+        // Set up background music - Initially paused
+        const bgMusic = document.getElementById('bgMusic');
+        
+        // Auto play music when user interacts with page (to satisfy browser autoplay policies)
+        $(document).one('click', function() {
+            bgMusic.play();
+            $('#toggleMusic').html('<i class="fas fa-volume-up"></i>');
+            audioPlaying = true;
+        });
+        
+        // Countdown timer
+        function updateCountdown() {
+            const weddingDate = new Date('June 7, 2025 10:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+            
+            // Time calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Display results
+            $('#days').text(days.toString().padStart(2, '0'));
+            $('#hours').text(hours.toString().padStart(2, '0'));
+            $('#minutes').text(minutes.toString().padStart(2, '0'));
+            $('#seconds').text(seconds.toString().padStart(2, '0'));
+            
+            // If countdown is finished
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                $('#days, #hours, #minutes, #seconds').text('00');
+            }
+        }
+        
+        // Update countdown immediately and then every second
+        updateCountdown();
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        
+        // Create floating hearts
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            
+            // Remove all existing hearts
+            while (heartsContainer.firstChild) {
+                heartsContainer.removeChild(heartsContainer.firstChild);
+            }
+            
+            // Create new hearts
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 3 + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // Create hearts initially and then every 3 seconds
+        createHearts();
+        setInterval(createHearts, 3000);
+        
+        // Comment form handling
+        $('#commentForm').on('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple validation
+            if ($('#commenterName').val().trim() === '' || $('#commentText').val().trim() === '') {
+                alert('Please enter your name and message.');
+                return;
+            }
+            
+            // Get form values
+            const name = $('#commenterName').val();
+            const comment = $('#commentText').val();
+            const initials = name.split(' ').map(word => word[0]).join('').toUpperCase();
+            
+            // Random color for avatar
+            const colors = ['primary', 'success', 'danger', 'warning', 'info'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Create comment HTML
+            const commentHTML = `
+                <div class="comment-card mb-3 animate__animated animate__fadeIn">
+                    <div class="comment-header d-flex align-items-center mb-2">
+                        <div class="avatar bg-${randomColor} text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                            <span>${initials}</span>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">${name}</h5>
+                            <small class="text-muted">Just now</small>
+                        </div>
+                    </div>
+                    <div class="comment-body p-3 bg-light rounded">
+                        <p class="mb-0">${comment}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Add to top of comments
+            $('#commentsContainer').prepend(commentHTML);
+            
+            // Clear form
+            $('#commentText').val('');
+            
+            // Show success message
+            const successMessage = $('<div class="alert alert-success mt-3" role="alert">Thank you for your wishes!</div>');
+            $(this).append(successMessage);
+            
+            // Remove success message after 3 seconds
+            setTimeout(() => {
+                successMessage.fadeOut('slow', function() {
+                    $(this).remove();
+                });
+            }, 3000);
+            
+            // In a real application, you would send this data to your server
+            /* 
+            const formData = {
+                name: name,
+                comment: comment,
+                date: new Date()
+            };
+            
+            // Send data to server using AJAX
+            $.ajax({
+                url: 'your-server-endpoint',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    // Handle success
+                },
+                error: function(error) {
+                    // Handle error
+                }
+            });
+            */
+        });
+        
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function(e) {
+            e.preventDefault();
+            
+            const target = $(this.hash);
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top
+                }, 800);
+            }
+        });
+        
+        // Add parallax effect on scroll
+        $(window).scroll(function() {
+            const scrollPosition = $(this).scrollTop();
+            $('.cover-section').css({
+                'background-position': 'center ' + (scrollPosition * 0.5) + 'px'
+            });
+        });
+        
+        // Image gallery interaction
+        $('.gallery-img').on('click', function() {
+            $(this).addClass('animate__animated animate__pulse');
+            setTimeout(() => {
+                $(this).removeClass('animate__animated animate__pulse');
+            }, 1000);
+        });
+        
+        // Add animation on scroll for sections
+        function animateOnScroll() {
+            $('.card-section').each(function() {
+                const position = $(this).offset().top;
+                const scroll = $(window).scrollTop();
+                const windowHeight = $(window).height();
+                
+                if (scroll + windowHeight > position + 100) {
+                    $(this).addClass('animate__animated animate__fadeIn');
+                }
+            });
+        }
+        
+        // Call on scroll and on load
+        $(window).on('scroll', animateOnScroll);
+        animateOnScroll();
+        
+        // Save to Calendar functionality
+        $('.save-date').on('click', function(e) {
+            e.preventDefault();
+            
+            // Google Calendar URL (in a real app, you'd generate this properly)
+            const googleCalendarUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Sarah+and+Michael+Wedding&dates=20251017T160000Z/20251017T220000Z&details=We+are+getting+married!+Join+us+for+our+special+day.&location=Rosewood+Gardens,+123+Blossom+Avenue,+Willowbrook,+CA+94321';
+            
+            window.open(googleCalendarUrl, '_blank');
+        });
+        
+        // Toggle music
+        let audioPlaying = false;
+        $('#toggleMusic').on('click', function() {
+            const audio = document.getElementById('bgMusic');
+            
+            if (audioPlaying) {
+                audio.pause();
+                $(this).html('<i class="fas fa-volume-mute"></i>');
+            } else {
+                audio.play();
+                $(this).html('<i class="fas fa-volume-up"></i>');
+            }
+            
+            audioPlaying = !audioPlaying;
+        });
+        
+        // Function to open Google Maps directions
+        window.showDirections = function() {
+            // Replace with actual venue coordinates
+            const venueAddress = "Gedung Produksi Batik Tulis Ponorogo";
+            const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(venueAddress)}`;
+            window.open(mapsUrl, '_blank');
+        };
+        
+        // Generate calendar download links
+        function generateCalendarLinks() {
+            // Wedding details
+            const title = "Sarah and Michael's Wedding";
+            const description = "Join us for our wedding ceremony and reception.";
+            const location = "Rosewood Gardens, 123 Blossom Avenue, Willowbrook, CA 94321";
+            const startDate = "2025-10-17T16:00:00";
+            const endDate = "2025-10-17T23:00:00";
+            
+            // Google Calendar
+            const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate.replace(/[-:]/g, '')}/${endDate.replace(/[-:]/g, '')}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
+            
+            // Attach to buttons
+            $('.google-cal-link').attr('href', googleCalUrl);
+        }
+        
+        // Call calendar link generator
+        generateCalendarLinks();
+        
+        // Add copy to clipboard functionality for bank account
+        $('.copy-account').on('click', function() {
+            const accountNumber = $(this).data('account');
+            
+            // Create temporary element
+            const el = document.createElement('textarea');
+            el.value = accountNumber;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            
+            // Show copied message
+            $(this).tooltip('hide')
+                .attr('data-bs-original-title', 'Copied!')
+                .tooltip('show');
+            
+            // Reset tooltip after 2 seconds
+            setTimeout(() => {
+                $(this).tooltip('hide')
+                    .attr('data-bs-original-title', 'Copy Account Number');
+            }, 2000);
+        });
+        
+        // Initialize tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
+</body>
+</html>
