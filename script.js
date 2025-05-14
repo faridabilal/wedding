@@ -262,85 +262,106 @@ const firebaseConfig = {
       });
       
       // Function to load comments from Firebase
-      function loadComments() {
-          // Clear existing comments
-          $('#commentsContainer').empty();
-          
-          // Display loading indicator
-          $('#commentsContainer').html('<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading comments...</div>');
-          
-          // Check if we have any comments
-          commentsRef.once('value')
-              .then((snapshot) => {
-                  console.log("Checking for comments...");
-                  
-                  if (!snapshot.exists()) {
-                      console.log("No comments found");
-                      $('#commentsContainer').html('<p class="text-center">No comments yet. Be the first to leave your wishes!</p>');
-                      return;
-                  }
-                  
-                  console.log("Found comments:", snapshot.numChildren());
-                  
-                  // Clear the container
-                  $('#commentsContainer').empty();
-                  
-                  // Array to hold comments
-                  const comments = [];
-                  
-                  // Get each comment
-                  snapshot.forEach((childSnapshot) => {
-                      const comment = childSnapshot.val();
-                      comments.push(comment);
-                  });
-                  
-                  // Reverse array to show newest comments first
-                  comments.reverse();
-                  
-                  // Render each comment
-                  comments.forEach((comment) => {
-                      // Format the date (from timestamp)
-                      const date = new Date(comment.timestamp);
-                      const formattedDate = formatDate(date);
-                      
-                      // Get initials for avatar
-                      const initials = comment.name.split(' ').map(word => word[0] || '').join('').toUpperCase();
-                      
-                      // Random color for avatar (using the same color for a specific name)
-                      const colors = ['primary', 'success', 'danger', 'warning', 'info'];
-                      // Use a simple hash function to get consistent colors for the same name
-                      const colorIndex = Math.abs(comment.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)) % colors.length;
-                      const avatarColor = colors[colorIndex];
-                      
-                      // Create comment HTML with improved alignment
-                      const commentHTML = `
-                          <div class="comment-card mb-3 animate__animated animate__fadeIn">
-                              <div class="comment-header d-flex align-items-start mb-2">
-                                  <div class="avatar bg-${avatarColor} text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px; flex-shrink: 0;">
-                                      <span>${initials}</span>
-                                  </div>
-                                  <div class="text-start" style="width: 100%;">
-                                      <div class="d-flex justify-content-between align-items-baseline">
-                                          <h5 class="mb-0">${comment.name}</h5>
-                                          <small class="text-muted ms-2">${formattedDate}</small>
-                                      </div>
-                                      <div class="comment-body p-3 bg-light rounded mt-2 text-start">
-                                          <p class="mb-0">${comment.message}</p>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      `;
-                      
-                      // Add to container
-                      $('#commentsContainer').append(commentHTML);
-                  });
-              })
-              .catch((error) => {
-                  console.error("Error getting comments: ", error);
-                  $('#commentsContainer').html(`<p class="text-center text-danger">Error loading comments: ${error.message}. Please try refreshing the page.</p>`);
-              });
-      }
+function loadComments() {
+    // Clear existing comments
+    $('#commentsContainer').empty();
+    
+    // Display loading indicator
+    $('#commentsContainer').html('<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading comments...</div>');
+    
+    // Check if we have any comments
+    commentsRef.once('value')
+        .then((snapshot) => {
+            console.log("Checking for comments...");
+            
+            if (!snapshot.exists()) {
+                console.log("No comments found");
+                $('#commentsContainer').html('<p class="text-center">No comments yet. Be the first to leave your wishes!</p>');
+                return;
+            }
+            
+            console.log("Found comments:", snapshot.numChildren());
+            
+            // Clear the container
+            $('#commentsContainer').empty();
+            
+            // Array to hold comments
+            const comments = [];
+            
+            // Get each comment
+            snapshot.forEach((childSnapshot) => {
+                const comment = childSnapshot.val();
+                comments.push(comment);
+            });
+            
+            // Reverse array to show newest comments first
+            comments.reverse();
+            
+            // Flower icons array - using appropriate Font Awesome icons
+            const flowerIcons = [
+                'fa-spa',           // Flower spa icon
+                'fa-seedling',      // Seedling icon
+                'fa-leaf',          // Leaf icon
+                // 'fa-fan',           // Fan icon (looks like a flower)
+                // 'fa-asterisk'       // Asterisk (star-like, resembles a simple flower)
+            ];
+            
+            // Render each comment
+            comments.forEach((comment) => {
+                // Format the date (from timestamp)
+                const date = new Date(comment.timestamp);
+                const formattedDate = formatDate(date);
+                
+                // Get a consistent icon and background color for each user
+                // Use the name to create a hash for consistency
+                const nameHash = comment.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                
+                // Background colors - pink and cream tones
+                const bgColors = [
+                    // '#f8bbd0', // Light pink
+                    '#f9e8d2', // Light cream
+                    // '#fce4ec', // Very light pink
+                    '#fff3e0', // Very light cream
+                    // '#ffebee'  // Pale pink
+                ];
+                
+                // Select consistent icon and color for the same user
+                const iconIndex = Math.abs(nameHash) % flowerIcons.length;
+                const colorIndex = Math.abs(nameHash + 1) % bgColors.length; // +1 to offset from icon index
+                
+                const selectedIcon = flowerIcons[iconIndex];
+                const avatarBgColor = bgColors[colorIndex];
+                
+                // Create comment HTML with flower icon
+                const commentHTML = `
+                    <div class="comment-card mb-3 animate__animated animate__fadeIn">
+                        <div class="comment-header d-flex align-items-start mb-2">
+                            <div class="avatar text-white rounded-circle d-flex align-items-center justify-content-center me-2" 
+                                 style="width: 40px; height: 40px; flex-shrink: 0; background-color: ${avatarBgColor};">
+                                <i class="fas ${selectedIcon}" style="color: var(--secondary-color);"></i>
+                            </div>
+                            <div class="text-start" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-baseline">
+                                    <h5 class="mb-0">${comment.name}</h5>
+                                    <small class="text-muted ms-2">${formattedDate}</small>
+                                </div>
+                                <div class="comment-body p-3 bg-light rounded mt-2 text-start">
+                                    <p class="mb-0">${comment.message}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add to container
+                $('#commentsContainer').append(commentHTML);
+            });
+        })
+        .catch((error) => {
+            console.error("Error getting comments: ", error);
+            $('#commentsContainer').html(`<p class="text-center text-danger">Error loading comments: ${error.message}. Please try refreshing the page.</p>`);
+        });
+}
       
       // Helper function to format date for comments
       function formatDate(date) {
