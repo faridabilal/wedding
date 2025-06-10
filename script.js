@@ -147,7 +147,7 @@ $(document).ready(function() {
     // Improved countdown timer with better formatting and handling
     function updateCountdown() {
         // Set target date - handle time zone explicitly
-        const weddingDate = new Date('June 7, 2025 10:00:00 GMT+0700').getTime();
+        const weddingDate = new Date('June 30, 2025 10:00:00 GMT+0700').getTime();
         const now = new Date().getTime();
         const distance = weddingDate - now;
         
